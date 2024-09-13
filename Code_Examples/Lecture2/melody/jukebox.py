@@ -31,7 +31,7 @@ def play_note(note):
             return
 
 # -------- if statements example --------
-    # if note == "C":
+    # if note == "C" or note == "c":
     #     tone = Sine(261.63) \
     #             .to_audio_segment(duration=1000) 
     # elif note == "C#":
@@ -46,7 +46,7 @@ def play_note(note):
 
     play(
         tone \
-            .apply_gain(-7) \
+            .apply_gain(-10) \
             .fade_in(50) \
             .fade_out(100)
     )

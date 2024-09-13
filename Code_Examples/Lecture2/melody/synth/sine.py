@@ -5,7 +5,7 @@ from pydub.generators import Sine
 generator = Sine(400)
 
 # Use this generator to synthesize a sound for 2 seconds (2000ms)
-tone = generator.to_audio_segment(duration=2000)
+tone = generator.to_audio_segment(2000)
 
 # Play it!
-play(tone)
+play(tone.apply_gain(-10))

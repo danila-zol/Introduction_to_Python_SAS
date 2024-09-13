@@ -16,15 +16,17 @@ They are completely isolated from other virtual environments and you will have t
 
 #### Install ffmpeg
 
-1. [Download ffmpeg](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-essentials.7z) and unarchive it
+1. Install [Chocolatey](https://chocolatey.org/install) - a convinient package manager for Windows
 
-2. Go to the unarchived folder, locate `bin` folder and copy its path
+2. Open PowerShell as Admin
 
-3. Open search (`Win+S`) and search for `Edit the system environmental variables`
+3. Paste the follwing script to install Chocolatey:
 
-4. Navigate to `Environment variables...` -> `System variables` -> `Path` and double-click it
+    `Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))`
 
-5. Paste the copied path into an empty field and click "ok"
+4. After it's installed you can check the installation by typing `choco`
+
+5. Install ffmpeg by typing `choco install ffmpeg` and confirm the installation by typing `y` when it prompts you to confirm: `Do you want to run the script?...`
 
 6. Test the installation by typing `ffmpeg` to your terminal
 
@@ -32,21 +34,17 @@ They are completely isolated from other virtual environments and you will have t
 
 1. Create a folder whereever you'd like and open your terminal (or code editor with terminal) there
 
-2. By default Windows PowerShell has a "stop" called `ExecutionPolicy` that restricts running scripts. We should disable it by using command: 
-
-    `Set-ExecutionPolicy Bypass -Scope CurrentUser -Force`
-
-3. Create a virtual environment in the current directory (`.`):
+2. Create a virtual environment in the current directory (`.`):
 
     `py -m venv .`
 
-4. Activate it:
+3. Activate it:
 
     `.\Scripts\activate`
 
     if your next prompt starts with `(python)` or `(<current-directory-name>)` then you have successfully activated your virtual environment and can now work on your code. But first we need to install some packages
 
-5. Install **pydub**, **pyaudio** and **scipy**:
+4. Install **pydub**, **pyaudio** and **scipy**:
 
     `pip install pydub pyaudio scipy`
 ---

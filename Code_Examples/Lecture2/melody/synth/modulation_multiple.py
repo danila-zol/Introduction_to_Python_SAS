@@ -24,23 +24,22 @@ def modulate(*tones):
 # Though you rarely need to modulate more than two generators
 play(
     modulate(triangle, sawtooth, sine) \
-        .apply_gain(-15) \
-        .low_pass_filter(15000)
+        .apply_gain(-20) \
 )
 
 melody = \
     modulate(triangle, sawtooth) \
-        .apply_gain(-15) \
+        .apply_gain(-20) \
         .low_pass_filter(15000) \
         .fade_out(250) \
     + AudioSegment.silent(500) \
     + modulate(sine, triangle) \
-        .apply_gain(-15) \
+        .apply_gain(-20) \
         .low_pass_filter(15000) \
         .fade_out(250) \
     + AudioSegment.silent(500) \
     + modulate(sine, sawtooth) \
-        .apply_gain(-15) \
+        .apply_gain(-20) \
         .low_pass_filter(15000) \
         .fade_out(250) 
 

@@ -25,12 +25,12 @@ def calculate_frequency(note: int):
 
 
 # Calculate the notes inside the list using list comprehension
-octave_four = [calculate_frequency(key) for key in range(40, 52)]
+# octave_four = [calculate_frequency(key) for key in range(40, 52)]
 
-# ---------------------------------------------------------------
+# # ---------------------------------------------------------------
 
-# You can even put the formula inside the list comprehension
-octave_four = [round(440 * 2**((key-49)/12), 2) for key in range(40, 52)]
+# # You can even put the formula inside the list comprehension
+# octave_four = [round(440 * 2**((key-49)/12), 2) for key in range(40, 52)]
 
 # ---------------------------------------------------------------
 
@@ -56,7 +56,7 @@ for i in octave_four:
 
 
 # Play the result
-play(result)
+play(result.apply_gain(-10))
 
 # Export the result
 # result.export("sine.mp3", format="mp3")

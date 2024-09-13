@@ -3,7 +3,7 @@ from pydub.playback import play
 from pydub.generators import Triangle
 
 pluck = Triangle(200).to_audio_segment(200) \
-                        .apply_gain(-7)
+                        .apply_gain(-10)
 
 # Pan to the left
 play(pluck.pan(-0.8))

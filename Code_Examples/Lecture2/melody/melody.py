@@ -24,9 +24,9 @@ def sequence(generator, notes: list) -> AudioSegment:
 
     return result
 
-MELODY = [ 260, 290, 200, 180, 150 ]
+notes = [ 260, 290, 200, 180, 150 ]
 
 play(
-    sequence(Sine, MELODY) \
-        .apply_gain(-5)
+    sequence(Sine, notes) \
+        .apply_gain(-10)
 )

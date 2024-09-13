@@ -9,9 +9,12 @@ generator2 = Sine(100)
 tone1 = generator1.to_audio_segment(duration=2000)
 tone2 = generator2.to_audio_segment(duration=2000)
 
+
+# play(tone1.low_pass_filter(14000).apply_gain(-15))
+# quit()
+
 # Play them both! (careful: overlays tend to get loud!)
 play(
     tone1.overlay(tone2) \
-        .apply_gain(-20) \
-        .low_pass_filter(14000)
+        .apply_gain(-30) \
 )

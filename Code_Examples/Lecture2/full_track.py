@@ -3,9 +3,9 @@ from pydub.generators import Sine, Triangle
 from pydub.silence import split_on_silence
 from pydub.playback import play
 
-kick1 = AudioSegment.from_wav("./drumloop/kick1.wav")
-kick2 = AudioSegment.from_mp3("./drumloop/kick2.mp3")
-kick3 = AudioSegment.from_wav("./drumloop/kick3.wav")
+kick1 = AudioSegment.from_mp3("./src/drumloop/kick1.mp3")
+kick2 = AudioSegment.from_mp3("./src/drumloop/kick2.mp3")
+kick3 = AudioSegment.from_mp3("./src/drumloop/kick3.mp3")
 
 kick1 = split_on_silence(kick1, min_silence_len=10)[0]
 kick2 = kick2.strip_silence(silence_thresh=-32)
@@ -30,18 +30,18 @@ drumloop = kick3 + \
             AudioSegment.silent(500)
 
 
-def delay(sound, repeat=1, fade=1, ping_pong=False):
+def delay(sound, repeat=1, fade=1, decrement=-2, ping_pong=False):
+    pan_value = 0
+    result = sound
+
     if ping_pong == True:
         pan_value = 1
-        result = sound
 
-        for i in range(repeat):
-            result += sound.pan(pan_value)
-            pan_value *= -1
+    for i in range(repeat):
+        result += sound.pan(pan_value).apply_gain(decrement)
+        pan_value *= -1
 
-        return result.fade_out(fade)
-
-    return (sound+sound*repeat).fade_out(fade)
+    return result.fade_out(fade)
 
 
 bass = Sine(144).to_audio_segment(200) + \
@@ -121,4 +121,4 @@ mixdown = bassline.apply_gain(-7) \
             ) \
             + bass
 
-play(mixdown)
+play(mixdown - 15)

@@ -20,7 +20,7 @@ def play_chords(name, attack=1, decay=200, release=1, **chords) -> None:
                                             .fade_in(attack) \
                                             .fade_out(release)
 
-            chord = chord.overlay(tone.normalize(10))
+            chord = chord.overlay(tone.apply_gain(-25))
 
             print(f"\tNote frequency: {note} Hz")
 
@@ -34,3 +34,4 @@ play_chords(
     Cm7=[261.63, 311.12, 391.99, 466.16],
     Dmaj7=[146.83, 184.99, 220, 277.18]
 )
+

@@ -17,18 +17,18 @@ def adr_envelope(generator, attack=1, decay=1000, release=1):
 play(
     adr_envelope(
             Sine(100), 
-            1500, 
-            1500, 
-            2000
+            release=2000,
+            decay=4000,
     ) \
         .apply_gain(-8)
 )
+
 play(AudioSegment.silent(200))
 # Positional argument "generator" and keyword argument "release"
 play(
     adr_envelope(
         Sine(100),
-        release=4000
+        release=4000,
     ) \
         .apply_gain(-8)
 )
@@ -46,4 +46,4 @@ backing_melody = \
         release=4000
     )
 
-backing_melody.apply_gain(-7).export("./melody/backing_melody.mp3", format="mp3")
+backing_melody.apply_gain(-7).export("./src/melody/backing_melody.mp3", format="mp3")
