@@ -19,21 +19,21 @@ class Vehicle:
     max_speed = 100 # Field with a default value
 
     # Special initialization function
-    def __init__(velocity = 0, heading = [0, 0, 0], position = [0, 0, 0]):
+    def __init__(self, velocity = 0, heading = [0, 0, 0], position = [0, 0, 0]):
         self.velocity = velocity # Setting up default fields
         self.heading = heading
         self.position = position
 
     # Methods
-    def turn(heading):
+    def turn(self, heading):
         self.heading += heading
 
-    def move(position):
+    def move(self, position):
         self.position += position
 
 # Class inheriting from Vehicle
 class Car(Vehicle):
-    def __init__(velocity = 0, heading = [0, 0, 0], position = [0, 0, 0]):
+    def __init__(self, velocity = 0, heading = [0, 0, 0], position = [0, 0, 0]):
         super(velocity, heading, position) # calling __init__ of the parent class
         self.max_speed = 150
 
@@ -58,16 +58,28 @@ Class itself only defines a class. It is like a blueprint for the data that we w
 The syntax for instantiation is similar to calling a function:
 
 ```python
-car = Car()
+car = Car() # An instance of car
 truck = Truck()
 ```
 
 The usual convention in Python is to name variables or functions in all lowercase and in camel case (starting with an uppercase letter).
 
+You can determine the type of an object with `type` function in Python. To list all variables defined on an object you can use `dir` function.
+
+Example:
+```python
+if type(l) == list:
+    print("l is a list")
+
+print(dir(l)) # Will print all variables defined on a list
+```
+
 Objects fascilitate code reuse and incapsulation of state. Instead of working with a lot of variables we can model our program as an interaction between a handful of objects that each manage their own state and only provide a clean interface to consumers with methods.
+
+## Operator Overloading
 
 All values in Python are objects under the hood and operators are actually defined as special methods on those objects. That is why you can override default operators such as addition, multiplication, and and so on in your classes. So called operator overloading is very useful to make operations with your classes more intuitive.
 
-Those special methods take the form of `__operation__(operand)`, the method for addition is `__add__(n)`. Full list can be found in Python documentation: https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types
+Those special methods take the form of `__operation__(self, operand)`, the method for addition is `__add__(self, n)`. Full list can be found in Python documentation: https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types
 
 For example we can define a type vector and implement proper scalar addition on it. In a default Python list the plus `+` operator means concatentaion, not mathematical addition and concatenation between list and integer is not defined, so it will not serve us well to represent vectors, unlike the class we declare here:
