@@ -1,0 +1,23 @@
+<h1 id="basic-sound-synthesis">Basic sound synthesis</h1>
+<h3 id="generators">Generators</h3>
+<p>Pydub allows generating sound using its generators<a href="#generators-vs-oscillators">[1]</a> from the module <code>pydub.generators</code>. To do that, just import the generator of your liking from the module and instantiate it in your program:</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> pydub.generators <span class="hljs-keyword">import</span> Sine
+
+<span class="hljs-comment"># Create a generator of frequency 400Hz</span>
+generator = Sine(<span class="hljs-number">400</span>)
+</code></pre>
+<p>We&#39;ve just imported a <code>Sine</code> wave generator and instantiated it in a <code>generator</code> variable with a frequency of 400 Hz</p>
+<p>Next we need to create an <code>AudioSegment</code> using this generator</p>
+<pre><code class="lang-python"><span class="hljs-comment"># Use this generator to synthesize a sound for 2 seconds (2000ms)</span>
+<span class="hljs-attr">tone</span> = generator.to_audio_segment(duration=<span class="hljs-number">2000</span>)
+</code></pre>
+<p>Good! Now, let&#39;s play it!</p>
+<pre><code class="lang-python">from pydub<span class="hljs-selector-class">.playback</span> import play
+
+<span class="hljs-function"><span class="hljs-title">play</span><span class="hljs-params">(tone)</span></span>
+</code></pre>
+<h3>Result</h3>
+<audio controls src="./sine.mp3"></audio>
+<p>Now that you know the basics of synthesis in pydub, you can advance into some more <a href="./advanced.html">sophisticated synthesis techniques</a>!</p>
+<p>...or go back to the <a href="../welcome.html">table of contents</a></p>
+<p id="generators-vs-oscillators">[1]: Unlike real oscillators in a synth, they just replicate physical oscillations of an electric signal using complex math</p>

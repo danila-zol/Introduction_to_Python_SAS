@@ -1,0 +1,40 @@
+<h1 id="chord-making">Chord making</h1>
+<p>This function allows making chords for the backing melody of your music by specifying chords to play with <code>kwargs</code>!</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> pydub <span class="hljs-keyword">import</span> AudioSegment
+<span class="hljs-keyword">from</span> pydub.playback <span class="hljs-keyword">import</span> play
+<span class="hljs-keyword">from</span> pydub.generators <span class="hljs-keyword">import</span> Sine
+
+def play_chords<span class="hljs-function"><span class="hljs-params">(name, attack=<span class="hljs-number">1</span>, decay=<span class="hljs-number">200</span>, release=<span class="hljs-number">1</span>, **chords)</span> -&gt;</span> None:
+
+    total_duration = sum([attack, decay, release])
+
+    <span class="hljs-built_in">print</span>(f<span class="hljs-string">"\t\tNow playing: {name}"</span>)
+
+    <span class="hljs-keyword">for</span> written_chord <span class="hljs-keyword">in</span> chords.keys():
+
+        chord = AudioSegment.silent(duration=decay)
+        <span class="hljs-built_in">print</span>(f<span class="hljs-string">"\nChord: {written_chord}"</span>)
+
+        <span class="hljs-keyword">for</span> note <span class="hljs-keyword">in</span> chords[written_chord]:
+
+            tone = Sine(note) <span class="hljs-string">\</span>
+                .to_audio_segment(duration=total_duration)<span class="hljs-string">\</span>
+                                            .fade_in(attack) <span class="hljs-string">\</span>
+                                            .fade_out(release)
+
+            chord = chord.overlay(tone.normalize(<span class="hljs-number">10</span>))
+
+            <span class="hljs-built_in">print</span>(f<span class="hljs-string">"\tNote frequency: {note} Hz"</span>)
+
+        play(chord)
+
+<span class="hljs-comment"># A declared keyword argument "decay" with user-specified chords</span>
+play_chords(
+    <span class="hljs-string">"My beautiful rhythm!"</span>,
+    decay=<span class="hljs-number">1000</span>,
+    C=[<span class="hljs-number">261.63</span>, <span class="hljs-number">329.63</span>, <span class="hljs-number">392</span>],
+    Cm7=[<span class="hljs-number">261.63</span>, <span class="hljs-number">311.12</span>, <span class="hljs-number">391.99</span>, <span class="hljs-number">466.16</span>],
+    Dmaj7=[<span class="hljs-number">146.83</span>, <span class="hljs-number">184.99</span>, <span class="hljs-number">220</span>, <span class="hljs-number">277.18</span>]
+)
+</code></pre>
+<p>Back to the <a href="../../welcome.html">table of contents</a></p>

@@ -1,0 +1,70 @@
+<h1 id="envelope">Envelope</h1>
+<p>An envelope is a function that changes some sound characteristic (frequency or amplitude) whenever an oscillator is excited — i.e. when you press a key of a synth or pull a string of an electric guitar.</p>
+<p>This page will focus on the <strong>amplitude envelope</strong>.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/ru/2/2f/ADSR.png" alt="ADSR function graph"></p>
+<p><em>Source: <a href="https://ru.wikipedia.org/wiki/ADSR-%D0%BE%D0%B3%D0%B8%D0%B1%D0%B0%D1%8E%D1%89%D0%B0%D1%8F">Wikipedia</a></em></p>
+<h3 id="this-envelope-has-">This envelope has:</h3>
+<ul>
+<li>A longer <strong>Attack</strong>, meaning that the sound will gradually phase in. </li>
+<li>The <strong>Sustain</strong> is quite low, so once the sound hits the maximum amplitude, the sound will become moderately softer. This will also be gradual since the <strong>Decay</strong> value is also big.</li>
+<li>Once the key is up, the big value of <strong>Release</strong> will ensure a long fade out of the sound.</li>
+</ul>
+<p>Although there are no direct implementations of ADSR envelope in pydub, we can use <code>fade in()</code> and <code>fade out()</code> effects to replicate it to an extent. I&#39;d call this envelope an ADR envelope.</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> pydub <span class="hljs-keyword">import</span> AudioSegment
+<span class="hljs-keyword">from</span> pydub.playback <span class="hljs-keyword">import</span> play
+<span class="hljs-keyword">from</span> pydub.generators <span class="hljs-keyword">import</span> Sine
+
+<span class="hljs-comment"># Attack and Release cannot be equal to zero due to technical limitations</span>
+def adr_envelope(generator, attack=<span class="hljs-number">1</span>, decay=<span class="hljs-number">1000</span>, release=<span class="hljs-number">1</span>):
+
+    total_duration = sum([attack, decay, release])
+
+    result = generator.to_audio_segment(duration=total_duration) <span class="hljs-string">\</span>
+                                            .fade_in(attack) <span class="hljs-string">\</span>
+                                            .fade_out(release)
+    <span class="hljs-keyword">return</span> result
+
+
+<span class="hljs-comment"># All arguments are positional and present</span>
+play(
+    adr_envelope(
+            Sine(<span class="hljs-number">100</span>), 
+            <span class="hljs-number">1500</span>, 
+            <span class="hljs-number">1500</span>, 
+            <span class="hljs-number">2000</span>
+    ) <span class="hljs-string">\</span>
+        .apply_gain(-<span class="hljs-number">8</span>)
+)
+play(AudioSegment.silent(<span class="hljs-number">200</span>))
+<span class="hljs-comment"># Positional argument "generator" and keyword argument "release"</span>
+play(
+    adr_envelope(
+        Sine(<span class="hljs-number">100</span>),
+        release=<span class="hljs-number">4000</span>
+    ) <span class="hljs-string">\</span>
+        .apply_gain(-<span class="hljs-number">8</span>)
+)
+
+backing_melody = <span class="hljs-string">\</span>
+    adr_envelope(
+            Sine(<span class="hljs-number">100</span>), 
+            <span class="hljs-number">1500</span>, 
+            <span class="hljs-number">1500</span>, 
+            <span class="hljs-number">2000</span>
+    ) + <span class="hljs-string">\</span>
+    AudioSegment.silent(<span class="hljs-number">200</span>) + <span class="hljs-string">\</span>
+    adr_envelope(
+        Sine(<span class="hljs-number">100</span>),
+        release=<span class="hljs-number">4000</span>
+    )
+
+backing_melody.apply_gain(-<span class="hljs-number">7</span>).<span class="hljs-keyword">export</span>(<span class="hljs-string">"./melody/backing_melody.mp3"</span>, format=<span class="hljs-string">"mp3"</span>)
+</code></pre>
+<p>Note that the function uses default parameters, so you don&#39;t have to specify all arguments on call.</p>
+<p>And now that we have this envelope, we can produce something like this:</p>
+
+<audio controls src="./backing_melody.mp3"></audio>
+
+<p><em>Have fun!</em></p>
+
+<p>Back to the <a href="../../welcome.html">table of contents</a></p>
