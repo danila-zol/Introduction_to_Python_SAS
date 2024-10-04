@@ -25,7 +25,6 @@ with open(start_dir + "/LICENSE") as f:
     for l in f:
         license += "# " + l
 license += "\n"
-print(license)
 
 print(f"Found files: {files}")
 for file in files:
